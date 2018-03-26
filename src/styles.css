@@ -7,6 +7,8 @@
 
 .game-board-container-style {
   width: 180px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .game-btn {
