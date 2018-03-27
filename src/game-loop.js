@@ -32,11 +32,13 @@ export default class GamePlayLoop {
   }
 
   movePlayer(btnIndex) {
+    let currentPlayerStatus = '';
     if (this.state.player1Move) {
-      this.state.Board.setPlayerPosition(btnIndex, this.state.Player1);
+      currentPlayerStatus = this.state.Board.setPlayerPosition(btnIndex, this.state.Player1);
     } else {
-      this.state.Board.setPlayerPosition(btnIndex, this.state.Player2);
+      currentPlayerStatus = this.state.Board.setPlayerPosition(btnIndex, this.state.Player2);
     }
+    console.log(currentPlayerStatus);
     this.state.totalMoves++;
   }
 }

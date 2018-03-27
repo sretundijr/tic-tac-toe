@@ -4,11 +4,14 @@ export default class GameBoard {
       gameBoard: ['', '', '', '', '', '', '', '', ''],
     };
   };
+  // rename this
   setPlayerPosition(index, PlayerObj) {
     PlayerObj.move(index);
     this.state.gameBoard[index] = PlayerObj;
-    console.log(this.findWinner(PlayerObj));
-    // return this.winningRows(PlayerObj.symbol);
+    return {
+      winner: this.isWinner(PlayerObj),
+      PlayerObj,
+    }
   }
   getGameBoard() {
     return this.state.gameBoard;
@@ -37,21 +40,36 @@ export default class GameBoard {
       /[147]/g,
       /[258]/g,
     ]
+    return this.isWinningCombo(columns, player);
+  }
+
+  isWinningCombo(winningCombos, player) {
     const playerMoveString = player.getMoves().join('');
-    const playerColumns = columns.map((item) => {
+    const playerColumns = winningCombos.map((item) => {
       return playerMoveString.match(item);
     })
     let winnerWinner = false;
     playerColumns.forEach((item) => {
       if (item) {
-        winnerWinner = (item.length === 3);
+        if (item.length === 3) {
+          winnerWinner = true;
+        }
       }
     })
     return winnerWinner;
   }
 
-  findWinner(player) {
-    if (this.winningRows(player) || this.winningColumns(player)) {
+  diagnolWin(player) {
+    const angles = [
+      /[048]/g,
+      /[246]/g,
+    ];
+
+    return this.isWinningCombo(angles, player);
+  }
+
+  isWinner(player) {
+    if (this.winningRows(player) || this.winningColumns(player) || this.diagnolWin(player)) {
       return true;
     }
     return false;
