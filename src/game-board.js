@@ -31,7 +31,6 @@ export default class GameBoard {
     }
     return false;
   }
-
   winningColumns(player) {
     const columns = [
       /[036]/g,

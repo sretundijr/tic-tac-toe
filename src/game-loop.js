@@ -39,12 +39,4 @@ export default class GamePlayLoop {
     }
     this.state.totalMoves++;
   }
-
-  checkForWin() {
-
-  }
-
-  incrementGameBoard() {
-
-  }
 }
