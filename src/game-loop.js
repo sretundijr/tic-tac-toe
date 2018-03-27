@@ -1,3 +1,4 @@
+
 export default class GamePlayLoop {
   constructor(Board, Player1, Player2) {
     this.state = {
@@ -11,9 +12,7 @@ export default class GamePlayLoop {
 
   flipForFirstPlay() {
     const randomStart = Math.floor(Math.random() * 2) + 1
-    console.log(randomStart);
     if (randomStart === 1) {
-      console.log(this.state.Player1);
       this.state.player1Move = true;
     }
   }
@@ -24,6 +23,9 @@ export default class GamePlayLoop {
       this.movePlayer(btnIndex);
       this.togglePlayer();
     }
+  }
+
+  getCurrentBoard() {
     return this.state.Board.getGameBoard();
   }
 
@@ -33,13 +35,13 @@ export default class GamePlayLoop {
 
   movePlayer(btnIndex) {
     let currentPlayerStatus = '';
-    console.log(this.state.player1Move);
     if (this.state.player1Move) {
       currentPlayerStatus = this.state.Board.setPlayerPosition(btnIndex, this.state.Player1);
     } else {
       currentPlayerStatus = this.state.Board.setPlayerPosition(btnIndex, this.state.Player2);
     }
-    console.log(currentPlayerStatus);
     this.state.totalMoves++;
+
+    console.log(currentPlayerStatus);
   }
 }

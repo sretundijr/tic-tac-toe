@@ -18,6 +18,5 @@ export default class Player {
   }
   move(index) {
     this.incrementMoves(index);
-    return this.getSymbol();
   }
 }
