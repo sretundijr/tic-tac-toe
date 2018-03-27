@@ -19,21 +19,25 @@ export default class GamePlayLoop {
   }
 
   play(btnIndex) {
-    this.togglePlayer(btnIndex);
-    this.state.player1Move = !this.state.player1Move;
-    this.state.totalMoves++;
-    // console.log(this.state.Board.winningRows());
+    // validates click event due to propagation    
+    if (!isNaN(btnIndex)) {
+      this.movePlayer(btnIndex);
+      this.togglePlayer();
+    }
     return this.state.Board.getGameBoard();
   }
 
-  togglePlayer(btnIndex) {
+  togglePlayer() {
+    this.state.player1Move = !this.state.player1Move;
+  }
+
+  movePlayer(btnIndex) {
     if (this.state.player1Move) {
       this.state.Board.setPlayerPosition(btnIndex, this.state.Player1);
-      this.state.Player1.move(btnIndex);
     } else {
       this.state.Board.setPlayerPosition(btnIndex, this.state.Player2);
-      this.state.Player2.move(btnIndex);
     }
+    this.state.totalMoves++;
   }
 
   checkForWin() {
