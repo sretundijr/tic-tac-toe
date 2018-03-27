@@ -1,8 +1,5 @@
 import GamePlayLoop from "./game-loop";
 
-import gameBoardBtn from './index';
-
-
 // the easy loop chooses random random values that are remaining, very easy to beat
 export default class AiEasyLoop extends GamePlayLoop {
   constructor(Board, Human, Ai) {
@@ -38,10 +35,14 @@ export default class AiEasyLoop extends GamePlayLoop {
     this.state.totalMoves++;
     this.togglePlayer();
 
-    const index = this.randomMove();
-    const currentPlayerStatus2 = this.state.Board.setPlayerPosition(index, this.state.Ai);
+    let currentPlayerStatus2 = '';
 
-    this.state.totalMoves++;
+    if (!currentPlayerStatus1.winner) {
+      const index = this.randomMove();
+      currentPlayerStatus2 = this.state.Board.setPlayerPosition(index, this.state.Ai);
+
+      this.state.totalMoves++;
+    }
 
     console.log(currentPlayerStatus1);
     console.log(currentPlayerStatus2);

@@ -6,6 +6,31 @@ import Player from './player';
 
 import AiEasyLoop from './ai-easy-loop';
 
+const handleGameTypeSelection = (Board) => {
+  const selectionBtnContainer = document.getElementById('user-selection');
+
+  selectionBtnContainer.addEventListener('click', (e) => {
+    console.log(e.target.value);
+    determineGameType(e.target.value, Board);
+  });
+}
+
+const determineGameType = (type, Board) => {
+  if (type === '2-player') {
+    const humanPlayer = new Player('X');
+    const humanPlayer2 = new Player('O');
+    const GamePlay = new GamePlayLoop(Board, humanPlayer, humanPlayer2);
+    GamePlay.flipForFirstPlay();
+    gameBoardBtnEvent(GamePlay);
+  } else if (type === 'easy') {
+    const humanPlayer = new Player('X');
+    const aiPlayer = new Player('O');
+    const EasyLoop = new AiEasyLoop(Board, humanPlayer, aiPlayer);
+    EasyLoop.flipForFirstPlay();
+    gameBoardBtnEvent(EasyLoop);
+  }
+}
+
 // fix this, rafactor to new file with other templates
 const gameBtnTemplate = (index, value = '') => {
   return `<button id="${index}-btn" class="game-btn">${value}</button>`
@@ -21,31 +46,20 @@ const gameBoardBtn = (board) => {
   return btnArray.join('');
 }
 
-export default function gameBoardBtnEvent(Game) {
+const gameBoardBtnEvent = (Game) => {
   document.getElementById('game-board').addEventListener('click', (e) => {
     const btnIndex = parseInt(e.target.id.replace('-btn', ''), 10);
 
     // todo change this, make a different function to return the game board
     Game.play(btnIndex);
     document.getElementById('game-board').innerHTML = gameBoardBtn(Game.getCurrentBoard());
-    // if (true) {
-    //   Game.play();
-    // }
   })
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const Board = new GameBoard();
   document.getElementById('game-board').innerHTML = gameBoardBtn(Board.getGameBoard());
-  const humanPlayer = new Player('X');
-  const aiPlayer = new Player('O');
+  handleGameTypeSelection(Board);
 
-  // const GamePlay = new GamePlayLoop(Board, humanPlayer, aiPlayer);
-  // GamePlay.flipForFirstPlay();
-  // gameBoardBtnEvent(GamePlay);
-
-  const EasyLoop = new AiEasyLoop(Board, humanPlayer, aiPlayer);
-  // EasyLoop.flipForFirstPlay();
-  gameBoardBtnEvent(EasyLoop);
 })
 

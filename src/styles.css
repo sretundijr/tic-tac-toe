@@ -5,6 +5,10 @@
   align-items: center;
 }
 
+.game-type-selection-container{
+  margin-bottom: 40px;
+}
+
 .game-board-container-style {
   width: 180px;
   display: flex;
