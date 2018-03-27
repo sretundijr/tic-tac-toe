@@ -5,17 +5,17 @@ export default class GamePlayLoop {
       Player1,
       Player2,
       totalMoves: 0,
-      player1Move: true,
+      player1Move: false,
     };
   }
 
   flipForFirstPlay() {
     const randomStart = Math.floor(Math.random() * 2) + 1
+    console.log(randomStart);
     if (randomStart === 1) {
-      return this.state.Player1;
+      console.log(this.state.Player1);
+      this.state.player1Move = true;
     }
-    player1Move: false;
-    return this.state.Player2;
   }
 
   play(btnIndex) {
@@ -33,6 +33,7 @@ export default class GamePlayLoop {
 
   movePlayer(btnIndex) {
     let currentPlayerStatus = '';
+    console.log(this.state.player1Move);
     if (this.state.player1Move) {
       currentPlayerStatus = this.state.Board.setPlayerPosition(btnIndex, this.state.Player1);
     } else {
