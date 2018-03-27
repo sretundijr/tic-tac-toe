@@ -8,4 +8,4 @@ Currently two player game works and ai easy works
 
 Next step add a medium difficulty version that plays a defensive game.
 
-End goal is to reproduce a version of the minimax alogorithm for the difficult game setting
+End goal is to reproduce a version of the minimax algorithm for the difficult game setting
