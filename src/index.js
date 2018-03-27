@@ -32,8 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const humanPlayer = new Player('X');
   const aiPlayer = new Player('O');
 
-  // const GamePlay = new GamePlayLoop();
-
   const GamePlay = new GamePlayLoop(Board, humanPlayer, aiPlayer);
   GamePlay.flipForFirstPlay();
   gameBoardBtnEvent(GamePlay);
