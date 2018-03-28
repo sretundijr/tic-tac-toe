@@ -24,11 +24,13 @@ export default class GamePlayLoop {
       this.movePlayer(btnIndex);
       this.togglePlayer();
     }
-    if (this.state.winningPlayer.winner) {
+    // checks for draw??
+    if (this.state.winningPlayer.winner || this.state.totalMoves === 9) {
       return this.endGamePlay()
     }
   }
 
+  // todo add stop condition for a tie game
   endGamePlay() {
     return this.state.winningPlayer
   }
