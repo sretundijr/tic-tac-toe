@@ -19,7 +19,7 @@ export default class GamePlayLoop {
   }
 
   play(btnIndex) {
-    // validates click event due to propagation    
+    // validates click event due to propagation
     if (!isNaN(btnIndex)) {
       this.movePlayer(btnIndex);
       this.togglePlayer();

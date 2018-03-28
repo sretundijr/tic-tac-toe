@@ -1,10 +1,12 @@
 import './styles.css';
 
 import GameBoard from './game-board';
-import GamePlayLoop from './game-loop';
+import GamePlayLoop from './game-loops/game-loop';
 import Player from './player';
 
-import AiEasyLoop from './ai-easy-loop';
+import AiEasyLoop from './game-loops/ai-easy-loop';
+import AiMediumLoop from './game-loops/ai-medium-loop';
+
 
 const handleGameTypeSelection = (Board) => {
   const selectionBtnContainer = document.getElementById('user-selection');
@@ -28,6 +30,14 @@ const determineGameType = (type, Board) => {
     const EasyLoop = new AiEasyLoop(Board, humanPlayer, aiPlayer);
     EasyLoop.flipForFirstPlay();
     gameBoardBtnEvent(EasyLoop);
+  } else if (type === 'medium') {
+    const humanPlayer = new Player('X');
+    const aiPlayer = new Player('O');
+    const mediumLoop = new AiMediumLoop(Board, humanPlayer, aiPlayer);
+    console.log(mediumLoop);
+    mediumLoop.flipForFirstPlay();
+    gameBoardBtnEvent(mediumLoop);
+    console.log(mediumLoop.getCurrentBoard());
   }
 }
 
