@@ -9,15 +9,19 @@ import AiMediumLoop from './game-loops/ai-medium-loop';
 
 // todo bug fix, this event fires once for every time the player has hit the button
 // ie played 5 games and selected a 6th game type this event will fire 6 times
-const handleGameTypeSelection = (Board) => {
+const handleGameTypeSelection = () => {
   const selectionBtnContainer = document.getElementById('user-selection');
 
   selectionBtnContainer.addEventListener('click', (e) => {
-    determineGameType(e.target.value, Board);
+    determineGameType(e.target.value);
   });
 }
 
-const determineGameType = (type, Board) => {
+const determineGameType = (type) => {
+
+  const Board = new GameBoard();
+  document.getElementById('game-board').innerHTML = gameBoardBtn(Board.getGameBoard());
+
   const humanPlayer = new Player('X');
   let GamePlay = '';
 
@@ -35,8 +39,23 @@ const determineGameType = (type, Board) => {
   gameBoardEventListener(GamePlay);
 }
 
+
+// templates
 const gameBtnTemplate = (index, value = '') => {
   return `<button id="${index}-btn" class="game-btn">${value}</button>`
+}
+
+const gameWinnerModal = (board) => {
+  return (
+    `
+    <div class="modal">
+      <h5>Congrats You Won!</h5>
+      <div id="modal-game-board" class="game-board-container-style">
+        ${gameBoardBtn(board)}
+      </div>
+    </div>
+  `
+  )
 }
 
 const gameBoardBtn = (board) => {
@@ -67,8 +86,10 @@ const gameBoardEventListener = (gamePlayLoop) => {
         const Board2 = new GameBoard();
         console.log('________new loop');
         // just clears the bored for now
+        console.log(isWinner);
         alert(`${isWinner.PlayerObj.getSymbol()}`);
-        document.getElementById('game-board').innerHTML = gameBoardBtn(Board2.getGameBoard());
+        document.getElementById('game-board').innerHTML = gameWinnerModal(gamePlayLoop.getCurrentBoard());
+        // document.getElementById('game-board').innerHTML = gameBoardBtn(Board2.getGameBoard());
         handleGameTypeSelection(Board2);
       }
     })
@@ -76,8 +97,6 @@ const gameBoardEventListener = (gamePlayLoop) => {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const Board = new GameBoard();
-  document.getElementById('game-board').innerHTML = gameBoardBtn(Board.getGameBoard());
-  handleGameTypeSelection(Board);
+  handleGameTypeSelection();
 })
 
