@@ -1,6 +1,7 @@
 import GamePlayLoop from "./game-loop";
 
-// the easy loop chooses random random values that are remaining, very easy to beat
+// the easy loop chooses random values from the remaining, very easy to beat
+// ai easy loop is parent to ai medium loop with its moveplayer method overriden
 export default class AiEasyLoop extends GamePlayLoop {
   constructor(Board, Human, Ai) {
     super(Board, Human, Ai);

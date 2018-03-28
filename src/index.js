@@ -7,7 +7,8 @@ import Player from './player';
 import AiEasyLoop from './game-loops/ai-easy-loop';
 import AiMediumLoop from './game-loops/ai-medium-loop';
 
-
+// todo bug fix, this event fires once for every time the player has hit the button
+// ie played 5 games and selected a 6th game type this event will fire 6 times
 const handleGameTypeSelection = (Board) => {
   const selectionBtnContainer = document.getElementById('user-selection');
 
@@ -36,12 +37,10 @@ const determineGameType = (type, Board) => {
     const aiPlayer = new Player('O');
     const mediumLoop = new AiMediumLoop(Board, humanPlayer, aiPlayer);
     mediumLoop.flipForFirstPlay();
-    // gameBoardBtnEvent(mediumLoop);
     classBasedEventListener(mediumLoop);
   }
 }
 
-// fix this, rafactor to new file with other templates
 const gameBtnTemplate = (index, value = '') => {
   return `<button id="${index}-btn" class="game-btn">${value}</button>`
 }

@@ -1,10 +1,16 @@
+
+// game board is mainly used for ui state and to check for winning combos
+// winning combinations are determined by a players combination of moves
+// as opposed to comparing it with the game board.
+// game board also interacts with the player obj by calling the move method
 export default class GameBoard {
   constructor() {
     this.state = {
       gameBoard: ['', '', '', '', '', '', '', '', ''],
     };
   };
-  // rename this
+  // called by the game play loop to increment the board and player
+  // then check for winner and return
   setPlayerPosition(index, PlayerObj) {
     PlayerObj.move(index);
     this.state.gameBoard[index] = PlayerObj;

@@ -1,8 +1,7 @@
 
 import AiEasyLoop from './ai-easy-loop';
 
-// import GameLoop from './game-loop';
-
+// todo find winning moves to increase the difficulty
 export default class AiMediumLoop extends AiEasyLoop {
   constructor(Board, Human, Ai) {
     super(Board, Human, Ai);
@@ -18,8 +17,7 @@ export default class AiMediumLoop extends AiEasyLoop {
     let gamePlayCombos = [];
     const moves = this.state.Human.getMoves().map(item => item);
     const movesListFirstOpenIndex = moves.length;
-    // currently finds a winning move for human one move ahead, need to change row win function
-    // for regex
+    // currently finds a winning move for human
     this.findOpenSpaces().forEach((item) => {
       moves[movesListFirstOpenIndex] = item;
       console.log(item, 'item');

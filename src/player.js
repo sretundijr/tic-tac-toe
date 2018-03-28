@@ -1,3 +1,5 @@
+
+
 export default class Player {
   constructor(symbol) {
     this.state = {

@@ -1,4 +1,9 @@
 
+// game play loop allows for two player mode.
+// it also serves as parent class for ai easy loop
+// the only method overriden by child classes is 
+// move player all other methods are reused as is
+// by child classes
 export default class GamePlayLoop {
   constructor(Board, Player1, Player2) {
     this.state = {
@@ -43,6 +48,7 @@ export default class GamePlayLoop {
     this.state.player1Move = !this.state.player1Move;
   }
 
+  // overriden by child classes
   movePlayer(btnIndex) {
     let currentPlayerStatus = '';
     if (this.state.player1Move) {
