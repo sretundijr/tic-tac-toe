@@ -9,7 +9,7 @@ export default class GameBoard {
     PlayerObj.move(index);
     this.state.gameBoard[index] = PlayerObj;
     return {
-      winner: this.isWinner(PlayerObj),
+      winner: this.isWinner(PlayerObj.getMoves()),
       PlayerObj,
     }
   }
@@ -19,22 +19,6 @@ export default class GameBoard {
   }
   // todo check for win using regex
   winningRows(listOfMoves) {
-    // let row1 = 0, row2 = 0, row3 = 0;
-    // for (let i = 0; i < this.state.gameBoard.length; i++) {
-    //   if (this.state.gameBoard[i] && this.state.gameBoard[i].getSymbol() === player.getSymbol()) {
-    //     if (i < 3) {
-    //       row1++;
-    //     } else if (i < 6) {
-    //       row2++;
-    //     } else {
-    //       row3++;
-    //     }
-    //   }
-    // }
-    // if (row1 === 3 || row2 === 3 || row3 === 3) {
-    //   return true;
-    // }
-    // return false;
     const rows = [
       /[012]/g,
       /[345]/g,
@@ -76,9 +60,10 @@ export default class GameBoard {
     return this.isWinningCombo(angles, listOfMoves);
   }
 
-  isWinner(player) {
-    if (this.winningRows(player.getMoves()) ||
-      this.winningColumns(player.getMoves()) || this.diagnolWin(player.getMoves())) {
+
+  // change this to accept only a list
+  isWinner(moves) {
+    if (this.winningRows(moves) || this.winningColumns(moves) || this.diagnolWin(moves)) {
       return true;
     }
     return false;
