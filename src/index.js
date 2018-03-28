@@ -19,17 +19,18 @@ const handleGameTypeSelection = (Board) => {
 
 const determineGameType = (type, Board) => {
   const humanPlayer = new Player('X');
+  let GamePlay = '';
 
   if (type === '2-player') {
     const humanPlayer2 = new Player('O');
-    const GamePlay = new GamePlayLoop(Board, humanPlayer, humanPlayer2);
+    GamePlay = new GamePlayLoop(Board, humanPlayer, humanPlayer2);
     GamePlay.flipForFirstPlay();
   } else if (type === 'easy') {
     const aiPlayer = new Player('O');
-    const GamePlay = new AiEasyLoop(Board, humanPlayer, aiPlayer);
+    GamePlay = new AiEasyLoop(Board, humanPlayer, aiPlayer);
   } else if (type === 'medium') {
     const aiPlayer = new Player('O');
-    const GamePlay = new AiMediumLoop(Board, humanPlayer, aiPlayer);
+    GamePlay = new AiMediumLoop(Board, humanPlayer, aiPlayer);
   }
   gameBoardEventListener(GamePlay);
 }
@@ -66,7 +67,7 @@ const gameBoardEventListener = (gamePlayLoop) => {
         const Board2 = new GameBoard();
         console.log('________new loop');
         // just clears the bored for now
-        // alert(`${isWinner.PlayerObj.getSymbol()}`);
+        alert(`${isWinner.PlayerObj.getSymbol()}`);
         document.getElementById('game-board').innerHTML = gameBoardBtn(Board2.getGameBoard());
         handleGameTypeSelection(Board2);
       }
