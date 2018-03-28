@@ -12,7 +12,6 @@ const handleGameTypeSelection = (Board) => {
   const selectionBtnContainer = document.getElementById('user-selection');
 
   selectionBtnContainer.addEventListener('click', (e) => {
-    console.log(e.target.value);
     determineGameType(e.target.value, Board);
   });
 }
@@ -22,22 +21,23 @@ const determineGameType = (type, Board) => {
     const humanPlayer = new Player('X');
     const humanPlayer2 = new Player('O');
     const GamePlay = new GamePlayLoop(Board, humanPlayer, humanPlayer2);
+    console.log(GamePlay, 'new game');
     GamePlay.flipForFirstPlay();
-    gameBoardBtnEvent(GamePlay);
+    classBasedEventListener(GamePlay);
   } else if (type === 'easy') {
     const humanPlayer = new Player('X');
     const aiPlayer = new Player('O');
     const EasyLoop = new AiEasyLoop(Board, humanPlayer, aiPlayer);
     EasyLoop.flipForFirstPlay();
-    gameBoardBtnEvent(EasyLoop);
+    classBasedEventListener(EasyLoop);
+
   } else if (type === 'medium') {
     const humanPlayer = new Player('X');
     const aiPlayer = new Player('O');
     const mediumLoop = new AiMediumLoop(Board, humanPlayer, aiPlayer);
-    console.log(mediumLoop);
     mediumLoop.flipForFirstPlay();
-    gameBoardBtnEvent(mediumLoop);
-    console.log(mediumLoop.getCurrentBoard());
+    // gameBoardBtnEvent(mediumLoop);
+    classBasedEventListener(mediumLoop);
   }
 }
 
@@ -56,19 +56,30 @@ const gameBoardBtn = (board) => {
   return btnArray.join('');
 }
 
-const gameBoardBtnEvent = (Game) => {
-  document.getElementById('game-board').addEventListener('click', (e) => {
-    const btnIndex = parseInt(e.target.id.replace('-btn', ''), 10);
+const classBasedEventListener = (gamePlayLoop) => {
 
-    const isWinner = Game.play(btnIndex);
-    document.getElementById('game-board').innerHTML = gameBoardBtn(Game.getCurrentBoard());
-    // stop and reset
-    if (isWinner && isWinner.winner) {
-      const Board = new GameBoard();
-      // just clears the bored for now
-      document.getElementById('game-board').innerHTML = gameBoardBtn(Board.getGameBoard());
-      handleGameTypeSelection(Board);
-    }
+  Array.from(document.getElementsByClassName('game-btn')).forEach((item) => {
+    item.addEventListener('click', (e) => {
+      const btnIndex = parseInt(e.target.id.replace('-btn', ''), 10);
+      // play loop is here, game play returns a player status
+      // change this to use the same board obj but reset instead of build new board
+      const isWinner = gamePlayLoop.play(btnIndex);
+      console.log(gamePlayLoop);
+      // fix remove gameplayloop get current board and pass in board object?
+      document.getElementById('game-board').innerHTML = gameBoardBtn(gamePlayLoop.getCurrentBoard());
+      classBasedEventListener(gamePlayLoop);
+      // stop and reset
+      // todo add reset for tie condition
+      if (isWinner && isWinner.winner) {
+        const Board2 = new GameBoard();
+        console.log('________new loop');
+        // just clears the bored for now
+        // alert(`${isWinner.PlayerObj.getSymbol()}`);
+        document.getElementById('game-board').innerHTML = gameBoardBtn(Board2.getGameBoard());
+        handleGameTypeSelection(Board2);
+        // classBasedEventListener(gamePlayLoop);
+      }
+    })
   })
 }
 
