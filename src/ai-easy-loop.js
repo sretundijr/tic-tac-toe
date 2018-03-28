@@ -31,21 +31,15 @@ export default class AiEasyLoop extends GamePlayLoop {
   // override movePlayer for ai implementation
   movePlayer(btnIndex) {
 
-    const currentPlayerStatus1 = this.state.Board.setPlayerPosition(btnIndex, this.state.Human);
+    this.state.winningPlayer = this.state.Board.setPlayerPosition(btnIndex, this.state.Human);
     this.state.totalMoves++;
     this.togglePlayer();
 
-    let currentPlayerStatus2 = '';
-
-    if (!currentPlayerStatus1.winner) {
+    if (!this.state.winningPlayer.winner) {
       const index = this.randomMove();
-      currentPlayerStatus2 = this.state.Board.setPlayerPosition(index, this.state.Ai);
+      this.state.winningPlayer = this.state.Board.setPlayerPosition(index, this.state.Ai);
 
       this.state.totalMoves++;
     }
-
-    console.log(currentPlayerStatus1);
-    console.log(currentPlayerStatus2);
-
   }
 }

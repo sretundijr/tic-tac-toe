@@ -7,6 +7,7 @@ export default class GamePlayLoop {
       Player2,
       totalMoves: 0,
       player1Move: false,
+      winningPlayer: '',
     };
   }
 
@@ -23,6 +24,13 @@ export default class GamePlayLoop {
       this.movePlayer(btnIndex);
       this.togglePlayer();
     }
+    if (this.state.winningPlayer.winner) {
+      return this.endGamePlay()
+    }
+  }
+
+  endGamePlay() {
+    return this.state.winningPlayer
   }
 
   getCurrentBoard() {
@@ -36,12 +44,12 @@ export default class GamePlayLoop {
   movePlayer(btnIndex) {
     let currentPlayerStatus = '';
     if (this.state.player1Move) {
-      currentPlayerStatus = this.state.Board.setPlayerPosition(btnIndex, this.state.Player1);
+      this.state.winningPlayer = this.state.Board
+        .setPlayerPosition(btnIndex, this.state.Player1);
     } else {
-      currentPlayerStatus = this.state.Board.setPlayerPosition(btnIndex, this.state.Player2);
+      this.state.winningPlayer = this.state.Board
+        .setPlayerPosition(btnIndex, this.state.Player2);
     }
     this.state.totalMoves++;
-
-    console.log(currentPlayerStatus);
   }
 }

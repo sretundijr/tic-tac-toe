@@ -50,9 +50,15 @@ const gameBoardBtnEvent = (Game) => {
   document.getElementById('game-board').addEventListener('click', (e) => {
     const btnIndex = parseInt(e.target.id.replace('-btn', ''), 10);
 
-    // todo change this, make a different function to return the game board
-    Game.play(btnIndex);
+    const isWinner = Game.play(btnIndex);
     document.getElementById('game-board').innerHTML = gameBoardBtn(Game.getCurrentBoard());
+    // stop and reset
+    if (isWinner && isWinner.winner) {
+      const Board = new GameBoard();
+      // just clears the bored for now
+      document.getElementById('game-board').innerHTML = gameBoardBtn(Board.getGameBoard());
+      handleGameTypeSelection(Board);
+    }
   })
 }
 
@@ -60,6 +66,5 @@ document.addEventListener('DOMContentLoaded', () => {
   const Board = new GameBoard();
   document.getElementById('game-board').innerHTML = gameBoardBtn(Board.getGameBoard());
   handleGameTypeSelection(Board);
-
 })
 
