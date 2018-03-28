@@ -18,10 +18,8 @@ const handleGameTypeSelection = () => {
 }
 
 const determineGameType = (type) => {
-
   const Board = new GameBoard();
-  document.getElementById('game-board').innerHTML = gameBoardBtn(Board.getGameBoard());
-
+  setGameBoardHtml(gameBoardBtn(Board.getGameBoard()));
   const humanPlayer = new Player('X');
   let GamePlay = '';
 
@@ -39,19 +37,25 @@ const determineGameType = (type) => {
   gameBoardEventListener(GamePlay);
 }
 
+const setGameBoardHtml = (html) => {
+  document.getElementById('game-board').innerHTML = html;
+}
 
 // templates
 const gameBtnTemplate = (index, value = '') => {
   return `<button id="${index}-btn" class="game-btn">${value}</button>`
 }
 
-const gameWinnerModal = (board) => {
+const gameWinnerModal = (symbol, board) => {
   return (
     `
     <div class="modal">
-      <h5>Congrats You Won!</h5>
+      <h5>Congrats ${symbol}'s!</h5>
       <div id="modal-game-board" class="game-board-container-style">
         ${gameBoardBtn(board)}
+      </div>
+      <div>
+        <h5>To Play again select a game type
       </div>
     </div>
   `
@@ -74,29 +78,25 @@ const gameBoardEventListener = (gamePlayLoop) => {
     item.addEventListener('click', (e) => {
       const btnIndex = parseInt(e.target.id.replace('-btn', ''), 10);
       // play loop is here, game play returns a player status
-      // change this to use the same board obj but reset instead of build new board
       const isWinner = gamePlayLoop.play(btnIndex);
       console.log(gamePlayLoop);
-      // fix remove gameplayloop get current board and pass in board object?
-      document.getElementById('game-board').innerHTML = gameBoardBtn(gamePlayLoop.getCurrentBoard());
+      setGameBoardHtml(gameBoardBtn(gamePlayLoop.getCurrentBoard()));
       gameBoardEventListener(gamePlayLoop);
       // stop and reset
       // todo add reset for tie condition
       if (isWinner && isWinner.winner) {
-        const Board2 = new GameBoard();
         console.log('________new loop');
-        // just clears the bored for now
         console.log(isWinner);
-        alert(`${isWinner.PlayerObj.getSymbol()}`);
-        document.getElementById('game-board').innerHTML = gameWinnerModal(gamePlayLoop.getCurrentBoard());
-        // document.getElementById('game-board').innerHTML = gameBoardBtn(Board2.getGameBoard());
-        handleGameTypeSelection(Board2);
+        setGameBoardHtml(
+          gameWinnerModal(isWinner.PlayerObj.getSymbol(), gamePlayLoop.getCurrentBoard()))
+        handleGameTypeSelection();
       }
     })
   })
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  setGameBoardHtml(gameBoardBtn(['', '', '', '', '', '', '', '', '']));
   handleGameTypeSelection();
 })
 
