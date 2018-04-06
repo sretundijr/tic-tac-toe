@@ -13,14 +13,17 @@ export default class AiMediumLoop extends AiEasyLoop {
     }
   }
 
-  findBetterMoveThenRandom() {
+  // currently finds a winning move for human and blocks it
+  // finds all open spaces then places an opponent there and checks for a winning combo
+  // game play combo collects all possibilities and is then filtered for only winning indexes
+  // if winning indexes arent present returns an empty list
+  blockOpponentWin() {
     let gamePlayCombos = [];
     const moves = this.state.Human.getMoves().map(item => item);
     const movesListFirstOpenIndex = moves.length;
-    // currently finds a winning move for human
+
     this.findOpenSpaces().forEach((item) => {
       moves[movesListFirstOpenIndex] = item;
-      console.log(item, 'item');
       gamePlayCombos.push({
         winner: this.state.Board.isWinner(moves),
         moves: moves.slice(),
@@ -30,23 +33,19 @@ export default class AiMediumLoop extends AiEasyLoop {
     return gamePlayCombos.filter(item => (item.winner === true));
   }
 
-  determineIfOpponentHasOneMoveWin() {
-    const openSpace = this.findOpenSpaces();
-    const board = this.getCurrentBoard();
-
-  }
-
   // override the easy loop implementation
   movePlayer(btnIndex) {
     this.state.winningPlayer = this.state.Board.setPlayerPosition(btnIndex, this.state.Human);
     this.state.totalMoves++;
     this.togglePlayer();
 
+    // if first player has not won
     if (!this.state.winningPlayer.winner) {
+      // Only checks for a block when enough moves have been made
       if (this.state.totalMoves >= 2 && this.state.totalMoves < 7) {
         let index = '';
-        const betterMoveList = this.findBetterMoveThenRandom();
-        console.log(betterMoveList, 'bettermovelist');
+        const betterMoveList = this.blockOpponentWin();
+        // ensures there is a better move present
         if (betterMoveList.length > 0) {
           index = betterMoveList[0].moves.pop();
         } else {

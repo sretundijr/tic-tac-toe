@@ -88,7 +88,9 @@ const gameBoardEventListener = (gamePlayLoop) => {
         console.log('________new loop');
         console.log(isWinner);
         setGameBoardHtml(
-          gameWinnerModal(isWinner.PlayerObj.getSymbol(), gamePlayLoop.getCurrentBoard()))
+          gameWinnerModal(
+            isWinner.PlayerObj.getSymbol(),
+            gamePlayLoop.getCurrentBoard()))
         handleGameTypeSelection();
       }
     })
