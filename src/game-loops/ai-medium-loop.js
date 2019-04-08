@@ -1,7 +1,6 @@
 
 import AiEasyLoop from './ai-easy-loop';
 
-// todo find winning moves to increase the difficulty
 export default class AiMediumLoop extends AiEasyLoop {
   constructor(Board, Human, Ai) {
     super(Board, Human, Ai);
@@ -39,13 +38,10 @@ export default class AiMediumLoop extends AiEasyLoop {
     this.state.totalMoves++;
     this.togglePlayer();
 
-    // if first player has not won
     if (!this.state.winningPlayer.winner) {
-      // Only checks for a block when enough moves have been made
       if (this.state.totalMoves >= 2 && this.state.totalMoves < 7) {
         let index = '';
         const betterMoveList = this.blockOpponentWin();
-        // ensures there is a better move present
         if (betterMoveList.length > 0) {
           index = betterMoveList[0].moves.pop();
         } else {

@@ -7,8 +7,6 @@ import Player from './player';
 import AiEasyLoop from './game-loops/ai-easy-loop';
 import AiMediumLoop from './game-loops/ai-medium-loop';
 
-// todo bug fix, this event fires once for every time the player has hit the button
-// ie played 5 games and selected a 6th game type this event will fire 6 times
 const handleGameTypeSelection = () => {
   const selectionBtnContainer = document.getElementById('user-selection');
 
@@ -41,7 +39,6 @@ const setGameBoardHtml = (html) => {
   document.getElementById('game-board').innerHTML = html;
 }
 
-// templates
 const gameBtnTemplate = (index, value = '') => {
   return `<button id="${index}-btn" class="game-btn">${value}</button>`
 }
@@ -77,12 +74,10 @@ const gameBoardEventListener = (gamePlayLoop) => {
   Array.from(document.getElementsByClassName('game-btn')).forEach((item) => {
     item.addEventListener('click', (e) => {
       const btnIndex = parseInt(e.target.id.replace('-btn', ''), 10);
-      // play loop is here, game play returns a player status
       const isWinner = gamePlayLoop.play(btnIndex);
       console.log(gamePlayLoop);
       setGameBoardHtml(gameBoardBtn(gamePlayLoop.getCurrentBoard()));
       gameBoardEventListener(gamePlayLoop);
-      // stop and reset
       // todo add reset for tie condition
       if (isWinner && isWinner.winner) {
         console.log('________new loop');

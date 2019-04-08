@@ -50,7 +50,6 @@ export default class GamePlayLoop {
 
   // overriden by child classes
   movePlayer(btnIndex) {
-    let currentPlayerStatus = '';
     if (this.state.player1Move) {
       this.state.winningPlayer = this.state.Board
         .setPlayerPosition(btnIndex, this.state.Player1);
